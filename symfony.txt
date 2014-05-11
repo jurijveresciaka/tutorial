@@ -1,0 +1,123 @@
+Symfony tutorial
+================
+:author:    Jurij Vereščiaka
+:email:     jurij.veresciaka@gmail.com
+:date:   2014-05-11
+
+SET UP
+------
+
+XAMPP
+~~~~~
+
+Edit file "hosts"
+^^^^^^^^^^^^^^^^^
+
+Path: 'C:\Windows\System32\drivers\etc\hosts'
+
+----
+127.0.0.1 project_name.dev
+127.0.0.1 localhost
+----
+
+Edit file "httpd-vhosts.conf"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Path: 'C:/xampp/apache/conf/extra/httpd-vhosts.conf'
+
+[source,xml]
+----
+<VirtualHost *:80>
+    ServerName project_name.dev
+    ServerAlias project_name.dev
+
+    DocumentRoot "C:/xampp/htdocs/project_name/web"
+    <Directory "C:/xampp/htdocs/project_name/web">
+        # enable the .htaccess rewrites
+        AllowOverride All
+        Order allow,deny
+        Allow from All
+    </Directory>
+</VirtualHost>
+----
+
+NEW PROJECT
+~~~~~~~~~~~
+
+Update composer
+^^^^^^^^^^^^^^^
+
+----
+composer self-update
+----
+
+Create project
+^^^^^^^^^^^^^^
+
+----
+composer create-project symfony/framework-standard-edition  project_name *.*.*
+----
+
+Check server
+^^^^^^^^^^^^
+
+http://localhost/project_name/web/config.php
+
+http://localhost/project_name/web/app-dev.php
+
+Create bundle
+^^^^^^^^^^^^^
+
+----
+$ php app/console generate:bundle --namespace=JV/CustomBundle --format=yml
+----
+
+Create bundle
+^^^^^^^^^^^^^
+
+----
+$ php app/console doctrine:database:create
+----
+
+PhpStorm
+~~~~~~~~
+
+Configuration
+^^^^^^^^^^^^^
+
+----
+File -> Project Settings -> Directories -> Exclude -> app/cache + app/log       
+File -> Project Settings -> PHP -> Interpreter -> PHP X.X.X
+File -> Project Settings -> PHP -> PHPUnit ->
+    Default Configuration File -> app\phpunit.xml.dist
+    Default Bootstrap File -> app\bootstrap.php.cache
+----
+
+ORM
+---
+
+Entities
+~~~~~~~~
+
+Create directory "Entity"
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Path: 'project_name\src\JV\CustomBundle\Entity'
+
+Create entity class "CustomEntity"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Path: 'project_name\src\JV\CustomBundle\Entity\CustomEntity.php'
+
+[source,php]
+----
+<?php
+
+namespace JV\CustomBundle\Entity;
+
+class CustomEntity {
+    private $id;
+    
+    private $custom_attribute;    
+}
+----
